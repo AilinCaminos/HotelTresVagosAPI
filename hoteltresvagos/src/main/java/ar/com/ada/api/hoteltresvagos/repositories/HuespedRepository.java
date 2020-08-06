@@ -34,4 +34,5 @@ public interface HuespedRepository extends JpaRepository<Huesped, Integer> {
     // nuestro caso el nombre del parametro es ":dni"
     @Query("SELECT h FROM Huesped h WHERE h.dni = :dni")
     List<Huesped> findByDNIVersion2(@Param("dni") Integer descripcion);
+
 }

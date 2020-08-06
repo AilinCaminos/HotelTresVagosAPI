@@ -17,10 +17,13 @@ public class ReservaService {
 
     @Autowired
     ReservarRepository reservaRepo;
+    @Autowired
+    HuespedService huespedService;
 
     public void grabar(Reserva reserva) {
 
-        reservaRepo.save(reserva);
+        huespedService.grabar(reserva.getHuesped());
+
     }
 
     public Reserva buscarPorId(int reservaId) {
@@ -58,5 +61,49 @@ public class ReservaService {
 
         return reservaRepo.findByNombreHuesped(nombre);
     }
+
+    public void crearReserva(Reserva reserva) {
+
+        grabar(reserva);
+
+    }
+
+    public Reserva crearReserva(int huespedId, Date fechaIngreso, Date fechaEgreso, BigDecimal importePagado) {
+
+        Reserva reserva = new Reserva();
+
+        reserva.setFechaReserva(new Date());
+        reserva.setFechaIngreso(fechaIngreso);
+        reserva.setFechaEgreso(fechaEgreso);
+        reserva.setImporteReserva(new BigDecimal(500));
+        reserva.setImporteTotal(new BigDecimal(10000));
+        reserva.setImportePagado(importePagado);
+        reserva.setImporteAdeudado(reserva.getImporteTotal().subtract(reserva.getImportePagado()));
+
+        if (reserva.getImporteAdeudado().doubleValue() == 0) {
+
+            reserva.setTipoEstadoId(10);
+
+        } else {
+
+            reserva.setTipoEstadoId(20);
+
+        }
+
+        Huesped huesped = huespedService.buscarPorId(huespedId);
+        huesped.agregarReserva(reserva);
+
+        crearReserva(reserva);
+
+        return reserva;
+
+    }
+
+    public List<Reserva> listarReservas(){
+
+        return reservaRepo.findAll();
+
+    }
+
 
 }

@@ -92,6 +92,14 @@ public class Huesped {
 
     public void setReservas(List<Reserva> reservas) {
         this.reservas = reservas;
+        
+    }
+
+    public void agregarReserva(Reserva reserva){
+        
+        this.reservas.add(reserva);
+        reserva.setHuesped(this);
+
     }
 
 }

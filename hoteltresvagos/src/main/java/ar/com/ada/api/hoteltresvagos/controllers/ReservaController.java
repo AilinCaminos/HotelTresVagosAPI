@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.ada.api.hoteltresvagos.entities.Reserva;
@@ -39,9 +40,17 @@ public class ReservaController {
     }
 
     @GetMapping("/reservas")
-    public ResponseEntity<List<Reserva>> getReservas(){
+    public ResponseEntity<List<Reserva>> getReservas(@RequestParam(value = "nombre", required = false) String nombre){
 
-        return ResponseEntity.ok(reservaService.listarReservas());
+        List<Reserva> lr;
+
+        if (nombre == null) {
+            lr = reservaService.getReservas();
+        } else {
+            lr = reservaService.buscarReservasPorNombre(nombre);
+        }
+
+        return ResponseEntity.ok(lr);
 
     }
 

@@ -120,7 +120,6 @@ public class Reserva {
 
     public void setHuesped(Huesped huesped) {
         this.huesped = huesped;
-        this.huesped.getReservas().add(this);
     }
 
 

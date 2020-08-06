@@ -82,7 +82,7 @@ public class HuespedController {
     }
 
     @PutMapping("/huespedes/{id}")
-    public ResponseEntity<?> postHuesped(@PathVariable int id, @RequestBody Huesped req) {
+    public ResponseEntity<?> putHuesped(@PathVariable int id, @RequestBody Huesped req) {
 
         GenericResponse r = new GenericResponse();
 
@@ -96,7 +96,7 @@ public class HuespedController {
 
         if (resultado) {
             r.isOk = true;
-            r.id = req.getHuespedId();
+            r.id = huespedOriginal.getHuespedId();
             r.message = "Huesped actualizado con éxito.";
             return ResponseEntity.ok(r);
         } else {

@@ -105,5 +105,18 @@ public class ReservaService {
 
     }
 
+    public boolean actualizarReserva(Reserva original, Reserva nueva) {
+        // Aca solo dejamos que se actualize las fechas tanto de reserva como de ingreso y egreso
+
+        original.setFechaReserva(new Date());
+        original.setFechaIngreso(nueva.getFechaIngreso());
+        original.setFechaEgreso(nueva.getFechaEgreso());
+
+        grabar(original);
+
+        return true;
+        
+    }
+
 
 }
